@@ -1,0 +1,48 @@
+Example 5 - From a user in Singapore (?), in comp.databases.oracle.misc
+I hope someone can help give me an SQL statement to get the following:-
+
+I have 2 tables, Emp and Dept.
+
+Comments (3 fields)
+---
+Staff_id      Dept_no         Staff_Comments
+12345A                S45             some comments
+12345A                S45             some other comments
+99999Q                G33             also comments
+ 
+Dept (2 fields)
+----
+Dept_no               Dept_name
+S45           Architecture
+S46           Science
+G33           Economics
+
+I would like to know the statement where I can find the number of staff in > department 'G33' who has only made ONE comment (meaning only one entry in the > COMMENT TABLE)
+
+=========================================================================================
+create  table emp(
+emp_id int not null,
+emp_name varchar(20),
+primary key(emp_id)
+);
+
+create table dept(
+dept_no int not null,
+dept_name varchar(20),
+primary key(dept_no)
+);
+
+
+
+create table comments(
+staff_id int,
+dept_no int,
+staff_comments varchar(50),
+foreign key(staff_id) references emp(emp_id),
+foreign key(dept_no) references dept(dept_no)
+);
+
+
+Answer:===================================================================================
+
+select staff_id, count(*) as count from comments where dept_no=33 group by staff_id ;

@@ -1,0 +1,38 @@
+Example 1 - From a user in Germany, in comp.datatabases.theory
+I have the following problem :
+
+there are three tables ...
+
+customer (nr int key, ....)
+registration (regcode char, customer_nr int, reg_date date)
+registrationcode (regcode char, artikel char)
+There could be a customer who has a registration and therefor a registrationcode. there could be also a customer who has no registration and no registrationcode and a registration- code which has no customer asigned.
+
+Now I´m looking for some way (in SQL) to show customer-data and registration-code - no matter if there is no customer or no registration code for each customer / registrationcode.
+
+=============================================================================================
+create table customer(
+nr INT not null,
+name varchar(20),
+primary key(nr)
+);
+
+create table registration(
+regcode char(255),
+customer_nr int,
+reg_date date,
+foreign key(regcode) references registrationcode(regcode),
+foreign key (customer_nr) references customer(nr)
+);
+
+create table registrationcode(
+regcode char(255) not null,
+artikel char(255),
+primary key (regcode)
+);	
+
+Answer:======================================================================================
+
+select c.*,rc.* from customer c
+left join registration r on c.nr = r.customer_nr
+full join registrationcode rc on r.regcode = rc.regcode ;

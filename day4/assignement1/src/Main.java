@@ -6,8 +6,7 @@ import java.util.Set;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
-    public static void main(String[] args) {
-        //Task One
+    public static void firstTask() {
         System.out.println("Task One: Write a program to join two ArrayList into one single ArrayList");
         CombineArrayList combineArrayList = new CombineArrayList();
         List<String> nameList1 = new ArrayList<>();
@@ -21,12 +20,13 @@ public class Main {
         List<String> joinedList = combineArrayList.getCombinedArrayList(nameList1, nameList2);
         System.out.println("Result for Joining " + nameList1 + " with " + nameList2 + " is :");
         System.out.println(joinedList);
+    }
 
-        //Task Two
-        System.out.println("Task two WAP to find common elements provided in 2 array.");
+    public static void secondTask() {
+        System.out.println("Task Two: WAP to find common elements provided in 2 array.");
         CommonArrayElements commonArrayElements = new CommonArrayElements();
-        int[] arrayOne = {2, 1, 4, 5, 7, 8, 9,2,4,6,3,10,9,2,0};
-        int[] arrayTwo = {6, 3, 0, 5, 3, 2,5,6,3,7,8};
+        int[] arrayOne = {2, 1, 4, 5, 7, 8, 9, 2, 4, 6, 3, 10, 9, 2, 0};
+        int[] arrayTwo = {6, 3, 0, 5, 3, 2, 5, 6, 3, 7, 8};
         System.out.println("First Array :");
         for (int num : arrayOne) {
             System.out.print(num);
@@ -36,30 +36,38 @@ public class Main {
             System.out.print(num);
         }
         System.out.println();
-        Set<Integer> commonElements = commonArrayElements.getcommonArrayElements(arrayOne, arrayTwo);
+        Set<Integer> commonElements = commonArrayElements.getCommonArrayElements(arrayOne, arrayTwo);
         System.out.println(commonElements);
+    }
 
-        //Task Three
-        System.out.println("Task three WAP to check balanced bracket.");
-        String sampleStringOne = "[company:(Thinkitive Tecnologies)]";
-        String sampleStringTwo = "[company:(Thinkitive Tecnologies])";
+    public static void thirdTask() {
+        System.out.println("Task Three: WAP to check balanced bracket.");
+        String sampleStringOne = "[company{}:(Thinkitive Tecnologies)]";
+        String sampleStringTwo = "[company{}:(Thinkitive Tecnologies])";
         BalancedBracket balancedBracket = new BalancedBracket();
-        System.out.println("Verification of String '" + sampleStringOne + "' for Balanced Bracket is : " + balancedBracket.getBracketVarified(sampleStringOne));
-        System.out.println("Verification of String '" + sampleStringTwo + "' for Balanced Bracket is : " + balancedBracket.getBracketVarified(sampleStringTwo));
+        System.out.println("Verification of String '" + sampleStringOne + "' for Balanced Bracket is : " + balancedBracket.isBracketBalanced(sampleStringOne));
+        System.out.println("Verification of String '" + sampleStringTwo + "' for Balanced Bracket is : " + balancedBracket.isBracketBalanced(sampleStringTwo));
+    }
 
+    public static void fourthTask() {
+        System.out.println("Task Four: Choose and implement correct data structure to reverse a String");
+        String sampleString= "Thinkitive";
+        System.out.println("Original String = "+sampleString);
+        ReverseString reverseString=new ReverseString();
+        String reversedString=reverseString.getStringReversed(sampleString);
+        System.out.println("Reversed String = "+reversedString);
+    }
 
-        //Task Four
-        System.out.println("Task four Choose and implement correct data structure to reverse a String");
-
-        //Task Five
-        System.out.println("Task Five WAP to count vowel in given string using collections. ");
+    public static void fifthTask() {
+        System.out.println("Task Five: WAP to count vowel in given string using collections. ");
         String company = "Thinkitive Tecnologies";
         CountVowels countVowels = new CountVowels();
         int count = countVowels.getVowelsCount(company);
         System.out.println("Vowels count in " + company + " is = " + count);
+    }
 
-        //Task Six
-        System.out.println("Task Six Matrix Multiplication");
+    public static void sixthTask() {
+        System.out.println("Task Six: WAP for Matrix Multiplication");
         MatrixMultiplication matrixMultiplication = new MatrixMultiplication();
         int[][] firstMatrix = {{1, 2, 3}, {4, 5, 6}};
         int[][] secondMatrix = {{7, 8}, {9, 10}, {11, 12}};
@@ -70,5 +78,20 @@ public class Main {
         matrixMultiplication.displayMatrix(secondMatrix);
         System.out.println("\nResult of Matrix Multiplication:");
         matrixMultiplication.displayMatrix(result);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=============================================================================================");
+        firstTask();
+        System.out.println("=============================================================================================");
+        secondTask();
+        System.out.println("=============================================================================================");
+        thirdTask();
+        System.out.println("=============================================================================================");
+        fourthTask();
+        System.out.println("=============================================================================================");
+        fifthTask();
+        System.out.println("=============================================================================================");
+        sixthTask();
     }
 }

@@ -1,15 +1,12 @@
 //Java Program for Matrix Multiplication
-
 public class MatrixMultiplication {
-
-    // Function to perform matrix multiplication
     public int[][] multiplyMatrices(int[][] firstMatrix, int[][] secondMatrix) {
         int rowsfirstMatrix = firstMatrix.length;
         int colsfirstMatrix = firstMatrix[0].length;
         int colssecondMatrix = secondMatrix[0].length;
 
-        int[][] result=null;
-        if (rowsfirstMatrix==colssecondMatrix) {
+        int[][] result = null;
+        if (rowsfirstMatrix == colssecondMatrix) {
             result = new int[rowsfirstMatrix][colssecondMatrix];
 
             for (int i = 0; i < rowsfirstMatrix; i++) {
@@ -22,12 +19,9 @@ public class MatrixMultiplication {
         } else {
             throw new RuntimeException("Matrix Multiplication Not Possible");
         }
-
-
         return result;
     }
 
-    // Function to display a matrix
     public void displayMatrix(int[][] matrix) {
         for (int[] row : matrix) {
             for (int value : row) {

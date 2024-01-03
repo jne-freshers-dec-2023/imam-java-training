@@ -45,4 +45,13 @@ foreign key(dept_no) references dept(dept_no)
 
 Answer:===================================================================================
 
-select staff_id, count(*) as count from comments where dept_no=33 group by staff_id ;
+
+select * 
+from emp e
+left join comments c on e.emp_id = c.staff_id
+where c.dept_no=33
+and (select count(*) from comments where dept_no=33 and staff_id= e.emp_id)=1;
+
+OR
+
+select * from (select staff_id as staff_with_only_one_comment, count(staff_id) as count from comments where dept_no=33 group by staff_id) as t where t.count=1;

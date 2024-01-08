@@ -1,0 +1,52 @@
+/*Example 1 - 
+
+there are three tables ...
+
+1) customer (nr int key, name varchar)
+2) registration (regcode char, customer_nr int, reg_date date)
+3) registrationcode (regcode char, artikel char)
+There could be a customer who has a registration and therefor a registrationcode. 
+There could be a customer who has no registration and no registrationcode.
+There could be a registrationcode which has no customer asigned.
+
+Problem:- Now I´m looking for some way to show customer-data and registration-code - no matter if there is no customer or no registration code for each customer/registrationcode.
+*/ 
+
+--creating table customer and dumpinf data into it
+create table customer(
+nr INT not null,
+name varchar(20),
+primary key(nr)
+);
+insert into customer values (1,'Abhay'),(2,'Imam'),(3,'Rohit'),(4,'Vishal'),(5,'Ram');
+select * from customer;
+
+
+--creating table registrationcode and dumping data into it
+create table registrationcode(
+regcode char(255),
+artikel char(255),
+primary key (regcode)
+);
+insert into registrationcode values (101,'abc'),(202,'ijk'),(303,'pqr'),(404,'uvw'),(505,'xyz');
+select * from registrationcode;
+
+
+--creating table registration and dumping data into it
+create table registration(
+regcode char(255),
+customer_nr int,
+reg_date date,
+foreign key(regcode) references registrationcode(regcode),
+foreign key (customer_nr) references customer(nr)
+);
+insert into registration values (202,2,'2021-11-21'),(101,3,'2022-12-22'),(404,1,'2023-1-23'),(303,null,'2020-10-2'),(null,4,'2020-10-1');
+select * from registration;
+
+
+--Solution for the Problem
+select c.*,rc.* from customer c
+left join registration r on c.nr = r.customer_nr
+full join registrationcode rc on r.regcode = rc.regcode ;
+
+

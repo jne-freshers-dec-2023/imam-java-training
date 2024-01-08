@@ -1,0 +1,31 @@
+/*
+Example 6 - 
+From two students from Belgium, in comp.databases.oracle.server
+how can i select the 20 biggest files from my table????????
+
+
+table files
+-------------
+naam     varchar2(50)
+size    integer
+
+*/
+
+--Creatiing and dumping data in to files
+create table files (
+naam varchar(50), 
+size int
+);
+insert into files 
+values ('file1',1),('file2',12),('file3',121),('file4',1444),('file5',3321),('file6',561),('file7',164),('file8',431),
+('file9',176),('file11',81),('file12',71),('file121',19),('file111',971),('file321',7091),('file154',761),('file201',13),
+('file61',154),('file51',132),('file156',321),('file18',461),('file81',617),('file71',431),('file17',176),('file188',314),
+('file871',416),('file179',1343),('file718',31),('file901',154),('file8971',716),('file3211',618),('file13456',917),('file5431',316);
+
+select * from files;
+
+
+
+--Posible solution for the problem
+select * from files order by size desc limit 20;
+

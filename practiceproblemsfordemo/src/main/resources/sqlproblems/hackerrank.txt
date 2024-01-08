@@ -1,0 +1,116 @@
+1) Question:=========================================================================================================================
+Query all columns (attributes) for every row in the CITY table.
+Answer:
+select * from city;
+
+
+2) Question:=========================================================================================================================
+Query all columns for all American cities in the CITY table with populations larger than 100000. The CountryCode for America is USA.
+Answer:
+select * from city where countrycode='USA' and population>100000;
+
+
+3) Question:=========================================================================================================================
+Query the NAME field for all American cities in the CITY table with populations larger than 120000. The CountryCode for America is USA.
+Answer:
+select name from city where countrycode='USA' and population >120000;
+
+
+4) Question:=========================================================================================================================
+Query all columns for a city in CITY with the ID 1661.
+City:
+select * from city where id =1661;
+
+
+5) Question:=========================================================================================================================
+Query the names of all the Japanese cities in the CITY table. The COUNTRYCODE for Japan is JPN.
+Answer:
+select name from city where countrycode='JPN';
+
+
+6) Question:=========================================================================================================================
+Query a list of CITY and STATE from the STATION table.
+Answer:
+select city, state from station;
+
+
+7) Question:=========================================================================================================================
+Query a list of CITY names from STATION for cities that have an even ID number. Print the results in any order, but exclude duplicates from the answer.
+Answer:
+select distinct city from station where id%2=0;
+
+
+8) Question:=========================================================================================================================
+Find the difference between the total number of CITY entries in the table and the number of distinct CITY entries in the table.
+Answer:
+select (count(city) - count(distinct city)) as dif_city from station;
+
+
+9) Question:=========================================================================================================================
+Query the two cities in STATION with the shortest and longest CITY names, as well as their respective lengths (i.e.: number of characters in the name). If there is more than one smallest or largest city, choose the one that comes first when ordered alphabetically.
+Answer:
+select city, Length(city) as city_length
+from station
+where
+city = (select city from station where
+    Length(city) = (select MIN(a.city_len) as small from (select Length(city) as city_len from station) as a)     order by city asc
+    limit 1)
+or
+city = (select city from station where
+    Length(city) = (select MAX(a.city_len) as large from (select Length(city) as city_len from station) as a)     order by city asc
+    limit 1)
+order by city_length asc;
+
+
+10) Question:=========================================================================================================================
+Query the list of CITY names starting with vowels (i.e., a, e, i, o, or u) from STATION. Your result cannot contain duplicates.
+Answer:
+select distinct city from STATION where city Like 'a%' or city Like 'e%' or city Like 'i%' or city Like 'o%' or city Like 'u%';
+
+
+11) Question:=========================================================================================================================
+Query the list of CITY names ending with vowels (a, e, i, o, u) from STATION. Your result cannot contain duplicates.
+Answer:
+select distinct city from STATION where city Like '%a' or city Like '%e' or city Like '%i' or city Like '%o' or city Like '%u';
+
+
+12) Question:=========================================================================================================================
+Query the list of CITY names from STATION which have vowels (i.e., a, e, i, o, and u) as both their first and last characters. Your result cannot contain duplicates.
+Answer:
+select distinct city from station where
+city Like 'a%a' or city Like 'a%e' or city Like 'a%i' or city Like 'a%o' or city Like 'a%u'
+or
+city Like 'e%a' or city Like 'e%e' or city Like 'e%i' or city Like 'e%o' or city Like 'e%u'
+or
+city Like 'i%a' or city Like 'i%e' or city Like 'i%i' or city Like 'i%o' or city Like 'i%u'
+or
+city Like 'o%a' or city Like 'o%e' or city Like 'o%i' or city Like 'o%o' or city Like 'o%u'
+or
+city Like 'u%a' or city Like 'u%e' or city Like 'u%i' or city Like 'u%o' or city Like 'u%u';
+
+
+12) Question:=========================================================================================================================
+Query the list of CITY names from STATION that do not start with vowels. Your result cannot contain duplicates.
+Answer:
+select distinct city from station where city not like 'A%' and city not like 'E%' and city not like 'I%' and city not like 'O%' and city not like 'U%';
+
+
+12) Question:=========================================================================================================================
+Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+Answer:
+select distinct city from station where city not like '%A' and city not like '%E' and city not like '%I' and city not like '%O' and city not like '%U';
+
+
+13) Question:=========================================================================================================================
+Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+Answer:
+Select distinct city from station where
+city not Like 'a%a' and city not Like 'a%e' and city not Like 'a%i' and city not Like 'a%o' and city not Like 'a%u'
+and
+city not Like 'e%a' and city not Like 'e%e' and city not Like 'e%i' and city not Like 'e%o' and city not Like 'e%u'
+and
+city not Like 'i%a' and city not Like 'i%e' and city not Like 'i%i' and city not Like 'i%o' and city not Like 'i%u'
+and
+city not Like 'o%a' and city not Like 'o%e' and city not Like 'o%i' and city not Like 'o%o' and city not Like 'o%u'
+and
+city not Like 'u%a' and city not Like 'u%e' and city not Like 'u%i' and city not Like 'u%o' and city not Like 'u%u';

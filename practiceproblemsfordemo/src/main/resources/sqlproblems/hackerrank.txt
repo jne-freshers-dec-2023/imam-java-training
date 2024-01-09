@@ -114,3 +114,27 @@ and
 city not Like 'o%a' and city not Like 'o%e' and city not Like 'o%i' and city not Like 'o%o' and city not Like 'o%u'
 and
 city not Like 'u%a' and city not Like 'u%e' and city not Like 'u%i' and city not Like 'u%o' and city not Like 'u%u';
+
+
+14) Question:=========================================================================================================================
+Given the CITY and COUNTRY tables, query the sum of the populations of all cities where the CONTINENT is 'Asia'.
+Answer:
+Select sum(city.population) from city
+left join country on city.countrycode=country.code
+where country.continent='Asia';
+
+
+15) Question:=========================================================================================================================
+Given the CITY and COUNTRY tables, query the names of all cities where the CONTINENT is 'Africa'.
+Answer:
+select city.NAME from city
+left join country on city.countrycode = country.code
+where continent='Africa';
+
+
+16) Question:=========================================================================================================================
+Given the CITY and COUNTRY tables, query the names of all the continents and their respective average city populations rounded down to the nearest integer.
+Answer:
+select country.continent, Round(AVG(city.population)) from city
+right join country on city.countrycode=country.code
+group by country.continent;

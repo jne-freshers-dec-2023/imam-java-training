@@ -1,0 +1,67 @@
+-- This Sql queries will illustrate the understanding of RDBMS basics.
+
+--Example for Maintaining Patient Data 
+
+--creating patiant details table having ONE to MANY relation with patient history table / NF1 is implemented as we can see here we are storing single record for single patient
+create table patient_details (p_id INT, p_name CHAR(10), primary key (p_id));
+
+--adding address column in patient_details 
+alter table patient_details add address VARCHAR(20);
+
+--dumping data in to patient_details
+insert into patient_details values (111,'sooraj','wakad'),(222,'shyam','baner'),(333,'pravin','pune camp'),(444,'laxmi','shree nagar'),(555,'saara','kondhawa'),(666,'babu','hinjewadi'),(777,'priya','pimpari');
+
+--can see all patient list
+select * from patient_details;
+
+--can see all patient list in ascending order
+select * from patient_details pd order by pd.p_id asc;
+
+--can see patient with the provided id
+select * from patient_details pd where pd.p_id=777;
+
+
+--creating speciality department table having ONE to MANY relation with doctor table / NF1 is implemented as we can see here we are storing single record for single speciality departmant
+create table spe_dept (spe_id INT, spe_name CHAR(20), primary key(spe_id));
+
+--dumping data in to spe_dept
+insert into spe_dept values (101,'Orthopedics'),(102,'dermatology'),(103,'pediatrics'),(104,'cardiology'),(105, 'neorology');
+
+--can see all the speciality departments list
+select * from spe_dept;
+
+--creating doctor table having ONE to ONE relation with spe_dept and ONE to MANY relation with patient_history table / NF2 is implemented as we are Refering spe_dept insted of repeating the department
+create table doctor (do_id INT, do_name CHAR(10), do_speciality INT, primary key(do_id), foreign key(do_speciality) references spe_dept(spe_id));
+
+--Dumping data in to doctor table
+insert into doctor values (201,'ram',102),(202,'ajay',103),(203,'ravi',101),(204,'samar',104),(205,'pooja',103),(206,'dev',105),(207,'maaya',104),(208,'ali',101);
+
+--can see all doctors list
+select * from doctor;
+
+--can see all doctors from a specific department
+select * from doctor d where d.do_speciality=103;
+
+--can see all doctors from a specific department with department name
+select d.do_id as Doctor_ID, d.do_name as Doctor_Name, sd.spe_name as Speciality 
+from doctor d 
+left join spe_dept sd on d.do_speciality = sd.spe_id
+where d.do_speciality=103;
+
+--creating patient_history table having MANY to MANY relation with patient_details and doctor table / NF2 implementation we can see as we are refering to patient_details and doctor table 
+create table patient_history (p_id INT, do_id INT, disease VARCHAR(20), foreign key (p_id) references patient_details(p_id), foreign key (do_id) references doctor(do_id));
+
+--dumping data in to patient_history table
+insert into patient_history values (444,206,'head injuary'),(222,203,'leg fracture'),(111,205,'viral fever'),(555,201,'skin burn'),(444,207,'chest pain'),(333,201,'skin infection'),(666,203,'arthritis'),(777,207,'Heart attack'),(222,205,'stomuch pain'),(555,206,'Brain tumer');
+
+--can see the patient_history tables all records
+select * from patient_history;
+
+--see all patient history along with the doctors associated with patient and doctors speciality
+select pd.p_id as Patient_Id, pd.p_name as Patient_Name, pd.address as Patient_Address, ph.disease, d.do_name as Doctor_Name, sd.spe_name as Department
+from patient_details pd
+left join patient_history ph on pd.p_id = ph.p_id
+left join doctor d on ph.do_id = d.do_id
+left join spe_dept sd on d.do_speciality = sd.spe_id order by pd.p_id asc;
+
+

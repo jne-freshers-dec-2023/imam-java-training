@@ -1,0 +1,73 @@
+/*
+Example 5 
+
+I have 3 tables, Emp, Dept and comments.
+
+Emp (2 fields)
+---
+emp_id		emp_name
+--------------------------------------------------
+111			abhay
+222			rohit
+333			imam
+
+Comments (3 fields)
+---
+Staff_id      		  Dept_no        Staff_Comments
+-----------------------------------------------------
+111                45             some comments
+111                45             some other comments
+222                33             also comments
+ 
+Dept (2 fields)
+----
+Dept_no      Dept_name
+------------------------------
+45           Architecture
+46           Science
+33           Economics
+
+I would like to know the statement where I can find the number of staff in department '33' who has only made ONE comment (meaning only one entry in the COMMENT TABLE)
+*/
+
+--Creating emp and dumping data into it
+create  table emp(
+emp_id int,
+emp_name varchar(20),
+primary key(emp_id)
+);
+insert into emp values (111,'abhay'),(222,'rohit'),(333,'imam');
+select * from emp;
+
+--Creating dept and dumping data into it
+create table dept(
+dept_no int,
+dept_name varchar(20),
+primary key(dept_no)
+);
+insert into dept values (45,'Architecture'),(46,'Science'),(33,'Economics');
+select * from dept;
+
+--Creating comments and dumping data into it
+create table comments(
+staff_id int,
+dept_no int,
+staff_comments varchar(50),
+foreign key(staff_id) references emp(emp_id),
+foreign key(dept_no) references dept(dept_no)
+);
+insert into comments values (111,45,'some comments'),(111,45,'some other comments'), (222,33,'also comments');
+select * from comments;
+
+
+--Posible solutions 1 for the Problem is
+select * 
+from emp e
+left join comments c on e.emp_id = c.staff_id
+where c.dept_no=33
+and (select count(*) from comments where dept_no=33 and staff_id= e.emp_id)=1;
+
+--Posible solutions 2 for the Problem is
+
+select * from (select staff_id as staff_with_only_one_comment, count(staff_id) as count from comments where dept_no=33 group by staff_id) as t where t.count=1;
+

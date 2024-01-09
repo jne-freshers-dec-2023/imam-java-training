@@ -1,0 +1,38 @@
+/*
+Example 4 -
+I have two tables and I want to retrieve just the rows from the first table that don't match the second table. How can I do that? I tried using this query but it returns a cartesian product.
+
+SELECT Table1.AccountDate
+FROM Table1 inner join table2 on table1.accountdate <>
+table2.accountdate
+*/
+
+--Using customer as Table1 and registration as Table2
+
+--Posible solution for the problem
+
+--creating table customer and dumpinf data into it
+create table customer(
+nr INT not null,
+name varchar(20),
+primary key(nr)
+);
+insert into customer values (1,'Abhay'),(2,'Imam'),(3,'Rohit'),(4,'Vishal'),(5,'Ram');
+select * from customer;
+
+
+--creating table registrationcode and dumping data into it
+create table registrationcode(
+regcode char(255),
+artikel char(255),
+primary key (regcode)
+);
+insert into registrationcode values (101,'abc'),(202,'ijk'),(303,'pqr'),(404,'uvw'),(505,'xyz');
+select * from registrationcode;
+
+--solution for the problem
+select * from customer c where c.nr not in (
+select c.nr from customer c 
+join registration r on c.nr = r.customer_nr);
+
+
